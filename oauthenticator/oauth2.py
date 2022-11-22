@@ -174,7 +174,10 @@ class OAuthCallbackHandler(BaseHandler):
         """
         self.check_error()
         self.check_code()
-        self.check_state()
+        token_params = self.authenticator.extra_authorize_params.copy()
+        # Only check the state if the config says so
+        if 'state' in token_params:
+            self.check_state()
 
     def append_query_parameters(self, url, exclude=None):
         """JupyterHub 1.2 appends query parameters by default in get_next_url
