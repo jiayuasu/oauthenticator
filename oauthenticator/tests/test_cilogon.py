@@ -45,7 +45,11 @@ async def test_cilogon(cilogon_client):
     auth_state = user_info['auth_state']
     assert 'access_token' in auth_state
     assert 'token_response' in auth_state
-    assert auth_state["cilogon_user"] == user_model('wash')
+    assert auth_state == {
+        'access_token': auth_state['access_token'],
+        'cilogon_user': user_model('wash'),
+        'token_response': auth_state['token_response'],
+    }
 
 
 async def test_cilogon_alternate_claim(cilogon_client):
@@ -60,7 +64,11 @@ async def test_cilogon_alternate_claim(cilogon_client):
     auth_state = user_info['auth_state']
     assert 'access_token' in auth_state
     assert 'token_response' in auth_state
-    assert auth_state["cilogon_user"] == alternative_user_model('jtkirk@ufp.gov', 'uid')
+    assert auth_state == {
+        'access_token': auth_state['access_token'],
+        'cilogon_user': alternative_user_model('jtkirk@ufp.gov', 'uid'),
+        'token_response': auth_state['token_response'],
+    }
 
 
 async def test_cilogon_additional_claim(cilogon_client):
@@ -75,7 +83,11 @@ async def test_cilogon_additional_claim(cilogon_client):
     auth_state = user_info['auth_state']
     assert 'access_token' in auth_state
     assert 'token_response' in auth_state
-    assert auth_state["cilogon_user"] == alternative_user_model('jtkirk@ufp.gov', 'uid')
+    assert auth_state == {
+        'access_token': auth_state['access_token'],
+        'cilogon_user': alternative_user_model('jtkirk@ufp.gov', 'uid'),
+        'token_response': auth_state['token_response'],
+    }
 
 
 async def test_cilogon_missing_alternate_claim(cilogon_client):
